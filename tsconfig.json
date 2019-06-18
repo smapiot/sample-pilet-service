@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "lib": [
+      "es2015",
+      "es2016"
+    ],
+    "sourceMap": true,
+    "outDir": "dist",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "moduleResolution": "node",
+    "baseUrl": "."
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    "src/**/*.test.ts"
+  ]
+}

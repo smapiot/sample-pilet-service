@@ -1,0 +1,58 @@
+{
+  "name": "sample-pilet-service",
+  "version": "1.0.0",
+  "description": "Piral: Sample pilet feed service.",
+  "main": "dist",
+  "typings": "dist",
+  "homepage": "https://piral.io",
+  "scripts": {
+    "test:unit": "jest src",
+    "test:watch": "npm run test:unit -- --watch",
+    "test": "npm run lint && npm run test:unit",
+    "start": "node dist/index.js",
+    "watch": "node index.js",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "prettier": "prettier --config prettier.config.js --write 'src/**/*.ts'",
+    "build": "tsc --project tsconfig.json",
+    "serve": "pm2-runtime dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:smapiot/sample-pilet-service.git"
+  },
+  "keywords": ["piral", "pilet", "feed", "service", "sample"],
+  "author": {
+    "name": "smapiot",
+    "url": "https://smapiot.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "connect-busboy": "0.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mime-types": "^2.1.22",
+    "pm2": "^3.5.0",
+    "response-time": "^2.3.2",
+    "tar": "^4.4.8"
+  },
+  "devDependencies": {
+    "@types/connect-busboy": "0.0.0",
+    "@types/cors": "^2.8.4",
+    "@types/express": "^4.16.1",
+    "@types/jest": "^24.0.11",
+    "@types/mime-types": "^2.1.0",
+    "@types/node": "^11.13.2",
+    "@types/response-time": "^2.3.3",
+    "@types/tar": "^4.0.0",
+    "dotenv": "^7.0.0",
+    "jest": "^24.7.1",
+    "jest-cli": "^24.7.1",
+    "prettier": "^1.16.4",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.15.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.4.2"
+  }
+}
