@@ -4,6 +4,7 @@ import * as cors from 'cors';
 import * as busboy from 'connect-busboy';
 import { piletPath, filePath, port } from './constants';
 import { checkAuth } from './middleware';
+import { withGql } from './resolvers';
 import { getFiles, publishPilet, getLatestPilets } from './endpoints';
 
 const app = express();
@@ -34,6 +35,6 @@ app.post(piletPath, checkAuth('publish-pilet'), publishPilet);
 
 app.get(filePath, getFiles);
 
-app.listen(port, () => {
+withGql(app).listen(port, () => {
   console.info(`Service started on port ${port}.`);
 });

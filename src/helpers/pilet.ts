@@ -15,17 +15,9 @@ function getPackageJson(files: PackageFiles): PackageData {
   return JSON.parse(content);
 }
 
-export function extractPiletMetadata(data: PackageData, main: string, file: string): PiletMetadata {
-  const name = data.name;
-  const version = data.preview ? `${data.version}-pre.${iter++}` : data.version;
-  return {
-    name,
-    version,
-    author: formatAuthor(data.author),
-    dependencies: {},
-    hash: computeHash(main),
-    link: `${rootUrl}/files/${name}/${version}/${file}`,
-  };
+function getContent(path: string, files: PackageFiles) {
+  const content = path && files[path];
+  return content && content.toString('utf8');
 }
 
 function getPiletMainPath(data: PackageData, files: PackageFiles) {
@@ -40,9 +32,21 @@ function getPiletMainPath(data: PackageData, files: PackageFiles) {
   return paths.map(filePath => `${packageRoot}${filePath}`).filter(filePath => !!files[filePath])[0];
 }
 
-function getPiletMainContent(path: string, files: PackageFiles) {
-  const content = path && files[path];
-  return content && content.toString('utf8');
+export function extractPiletMetadata(data: PackageData, main: string, file: string, files: PackageFiles): PiletMetadata {
+  const name = data.name;
+  const version = data.preview ? `${data.version}-pre.${iter++}` : data.version;
+  return {
+    name,
+    version,
+    author: formatAuthor(data.author),
+    dependencies: {},
+    hash: computeHash(main),
+    link: `${rootUrl}/files/${name}/${version}/${file}`,
+    license: {
+      type: data.license || 'ISC',
+      text: getContent(`${packageRoot}LICENSE`, files) || '',
+    },
+  };
 }
 
 export function getPiletDefinition(stream: NodeJS.ReadableStream): Promise<Pilet> {
@@ -51,8 +55,8 @@ export function getPiletDefinition(stream: NodeJS.ReadableStream): Promise<Pilet
     const path = getPiletMainPath(data, files);
     const root = dirname(path);
     const file = basename(path);
-    const main = getPiletMainContent(path, files);
-    const meta = extractPiletMetadata(data, main, file);
+    const main = getContent(path, files);
+    const meta = extractPiletMetadata(data, main, file, files);
     return {
       meta,
       root,

@@ -1,9 +1,8 @@
 import { RequestHandler } from 'express';
 import { join, relative, sep } from 'path';
 import { lookup } from 'mime-types';
-import { getPilet, setPilet, getPilets } from '../db';
-import { getPiletDefinition } from '../helpers';
-import { PiletMetadata } from '../types';
+import { latestPilets, storePilet } from '../pilets';
+import { getPilet } from '../db';
 
 export const getFiles: RequestHandler = async (req, res) => {
   const { name, version, org, file } = req.params;
@@ -41,16 +40,9 @@ export const getFiles: RequestHandler = async (req, res) => {
 };
 
 export const getLatestPilets: RequestHandler = async (_, res) => {
-  const pilets = await getPilets();
-  const unique = pilets.reduce(
-    (prev, curr) => {
-      prev[curr.meta.name] = curr.meta;
-      return prev;
-    },
-    {} as Record<string, PiletMetadata>,
-  );
+  const items = await latestPilets();
   return res.json({
-    items: Object.keys(unique).map(name => unique[name]),
+    items,
   });
 };
 
@@ -60,21 +52,20 @@ export const publishPilet: RequestHandler = (req, res) => {
   if (bb) {
     req.pipe(bb);
 
-    bb.on('file', (_: any, file: NodeJS.ReadableStream) => {
-      getPiletDefinition(file)
-        .then(async meta => {
-          await setPilet(meta);
+    bb.on('file', (_: any, file: NodeJS.ReadableStream) =>
+      storePilet(file)
+        .then(() =>
           res.status(200).json({
             success: true,
-          });
-        })
-        .catch(err => {
+          }),
+        )
+        .catch(err =>
           res.status(400).json({
             success: false,
             message: err.message,
-          });
-        });
-    });
+          }),
+        ),
+    );
   } else {
     res.status(400).json({
       success: false,

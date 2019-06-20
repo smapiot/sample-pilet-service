@@ -1,3 +1,7 @@
+export interface PiletDependencies {
+  [key: string]: string;
+}
+
 export interface PiletMetadata {
   name: string;
   version: string;
@@ -5,9 +9,11 @@ export interface PiletMetadata {
     name: string;
     email: string;
   };
-  dependencies?: {
-    [key: string]: string;
+  license: {
+    type: string;
+    text: string;
   };
+  dependencies?: PiletDependencies;
   link: string;
   hash: string;
 }
@@ -34,6 +40,7 @@ export interface PackageData {
         email?: string;
       };
   main?: string;
+  license?: string;
   dependencies?: {
     [name: string]: string;
   };
