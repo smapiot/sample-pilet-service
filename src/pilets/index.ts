@@ -1,14 +1,6 @@
 import { getPilets, setPilet } from '../db';
 import { getPiletDefinition } from '../helpers';
-import { PiletMetadata, PiletDependencies } from '../types';
-
-export function convertDependencies(dependencies: PiletDependencies) {
-  var depNames = Object.keys(dependencies);
-  return depNames.map(name => ({
-    name,
-    link: dependencies[name],
-  }));
-}
+import { PiletMetadata } from '../types';
 
 export async function latestPilets() {
   const pilets = await getPilets();

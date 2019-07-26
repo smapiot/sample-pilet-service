@@ -1,20 +1,19 @@
+import { GraphQLJSON } from 'graphql-type-json';
 import { Application } from 'express';
 import { ApolloServer, gql, IResolvers } from 'apollo-server-express';
-import { latestPilets, convertDependencies } from '../pilets';
+import { latestPilets } from '../pilets';
 
 const typeDefs = gql`
+  scalar JSON
+
   type PiletMetadata {
     name: ID!
+    description: String
     version: String
     author: PiletAuthor
     hash: String
     link: String
-    dependencies: [PiletDependency]
-  }
-
-  type PiletDependency {
-    name: String
-    link: String
+    custom: JSON
   }
 
   type PiletLicense {
@@ -42,11 +41,12 @@ const resolvers: IResolvers = {
       const pilets = await latestPilets();
       return pilets.map(p => ({
         name: p.name,
+        description: p.description,
         version: p.version,
         author: p.author,
         hash: p.hash,
         link: p.link,
-        dependencies: convertDependencies(p.dependencies || {}),
+        custom: p.custom,
       }));
     },
     async piletLicense(_parent: any, args: any, _context: any) {
@@ -66,6 +66,7 @@ const resolvers: IResolvers = {
       return undefined;
     },
   },
+  JSON: GraphQLJSON,
 };
 
 export function withGql(app: Application) {

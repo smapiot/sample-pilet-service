@@ -1,9 +1,7 @@
-export interface PiletDependencies {
-  [key: string]: string;
-}
-
 export interface PiletMetadata {
   name: string;
+  description: string;
+  custom?: any;
   version: string;
   author: {
     name: string;
@@ -13,7 +11,6 @@ export interface PiletMetadata {
     type: string;
     text: string;
   };
-  dependencies?: PiletDependencies;
   link: string;
   hash: string;
 }
@@ -30,8 +27,10 @@ export interface PackageFiles {
 
 export interface PackageData {
   name: string;
+  description: string;
   version: string;
   preview?: boolean;
+  custom?: any;
   author:
     | string
     | {

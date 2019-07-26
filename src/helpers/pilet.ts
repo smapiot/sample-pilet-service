@@ -32,14 +32,20 @@ function getPiletMainPath(data: PackageData, files: PackageFiles) {
   return paths.map(filePath => `${packageRoot}${filePath}`).filter(filePath => !!files[filePath])[0];
 }
 
-export function extractPiletMetadata(data: PackageData, main: string, file: string, files: PackageFiles): PiletMetadata {
+export function extractPiletMetadata(
+  data: PackageData,
+  main: string,
+  file: string,
+  files: PackageFiles,
+): PiletMetadata {
   const name = data.name;
   const version = data.preview ? `${data.version}-pre.${iter++}` : data.version;
   return {
     name,
+    description: data.description,
     version,
+    custom: data.custom,
     author: formatAuthor(data.author),
-    dependencies: {},
     hash: computeHash(main),
     link: `${rootUrl}/files/${name}/${version}/${file}`,
     license: {
