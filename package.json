@@ -16,6 +16,12 @@
     "build": "tsc --project tsconfig.json",
     "serve": "pm2-runtime dist/index.js"
   },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "bin": {
+    "sample-pilet-service": "./dist/cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:smapiot/sample-pilet-service.git"

@@ -1,10 +1,8 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
-- master
+  branches:
+    include:
+    - master
+    - develop
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -19,3 +17,19 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+
+- script: |
+    sed -i -e "s/\(\"version\":\\s\+\"\([0-9]\+\.\?\)\+\)/\1-pre.$BUILD_BUILDNUMBER/" package.json;
+  displayName: 'Preview version'
+  condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+- script: |
+    npm pack
+  displayName: 'npm pack'
+
+- task: Npm@1
+  inputs:
+    command: publish
+    publishEndpoint: 'NPM connection 1'
+  displayName: 'Publish package'
+  condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/master', 'refs/heads/develop'))

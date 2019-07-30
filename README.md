@@ -1,6 +1,6 @@
 [![Piral Logo](https://github.com/smapiot/piral/raw/master/docs/assets/logo.png)](https://piral.io)
 
-# [Sample Pilet Feed](https://piral.io) &middot; [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/smapiot/piral/blob/master/LICENSE) [![GitHub Tag](https://img.shields.io/github/tag/smapiot/piral.svg)](https://github.com/smapiot/piral/releases) [![Gitter Chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/piral-io/community)
+# [Sample Pilet Feed](https://piral.io) &middot; [![Build Status](https://smapiot.visualstudio.com/piral/_apis/build/status/smapiot.sample-pilet-service?branchName=master)](https://smapiot.visualstudio.com/piral/_build/latest?definitionId=14&branchName=master) [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/smapiot/piral/blob/master/LICENSE) [![GitHub Tag](https://img.shields.io/github/tag/smapiot/piral.svg)](https://github.com/smapiot/piral/releases) [![Gitter Chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/piral-io/community)
 
 A simple Node.js sample pilet feed service for use with Piral.
 
@@ -44,6 +44,22 @@ For the pilets the reported URL is `http://localhost/...` unless changed via `sr
 | PORT                   | The port, otherwise falling back to 9000                                        |
 | HTTPS                  | Is HTTPS active, otherwise falling back to HTTP                                 |
 | HTTP_X_FORWARDED_PROTO | The used protocol (e.g., `http`), otherwise falling back to the `HTTPS` setting |
+
+## Usage via NPM
+
+Alternatively, if you want to use the service only locally to play around you can also install and run the package via NPM:
+
+```sh
+npx sample-piral-service
+```
+
+You could also install it globally:
+
+```sh
+npm i sample-piral-service -g
+```
+
+This will enable a new command `sample-piral-service` to be invoked on the command line shell.
 
 ## License
 
