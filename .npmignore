@@ -7,4 +7,4 @@ tslint.json
 jest.config.js
 prettier.config.js
 src/
-index.js
+./index.js

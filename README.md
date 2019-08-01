@@ -50,16 +50,16 @@ For the pilets the reported URL is `http://localhost/...` unless changed via `sr
 Alternatively, if you want to use the service only locally to play around you can also install and run the package via NPM:
 
 ```sh
-npx sample-piral-service
+npx sample-pilet-service
 ```
 
 You could also install it globally:
 
 ```sh
-npm i sample-piral-service -g
+npm i sample-pilet-service -g
 ```
 
-This will enable a new command `sample-piral-service` to be invoked on the command line shell.
+This will enable a new command `sample-pilet-service` to be invoked on the command line shell.
 
 ## License
 
