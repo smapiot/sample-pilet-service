@@ -16,7 +16,7 @@ const pkg = {
 
 describe('Extract Metadata', () => {
   it('returns metadata based on a package.json', () => {
-    const metaData = extractPiletMetadata(pkg, '', '', {});
+    const metaData = extractPiletMetadata(pkg, '', '', {}, '');
     expect(metaData).toMatchObject({
       name: 'test',
       version: '0.1.0',
@@ -40,6 +40,7 @@ describe('Format Author', () => {
       '',
       '',
       {},
+      '',
     );
     expect(metaData.author).toMatchObject({
       name: 'User Example',

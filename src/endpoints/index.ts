@@ -4,7 +4,7 @@ import { lookup } from 'mime-types';
 import { latestPilets, storePilet } from '../pilets';
 import { getPilet } from '../db';
 
-export const getFiles: RequestHandler = async (req, res) => {
+export const getFiles = (): RequestHandler => async (req, res) => {
   const { name, version, org, file } = req.params;
   const id = org ? `@${org}/${name}` : name;
   const pilet = await getPilet(id, version);
@@ -39,21 +39,21 @@ export const getFiles: RequestHandler = async (req, res) => {
   }
 };
 
-export const getLatestPilets: RequestHandler = async (_, res) => {
+export const getLatestPilets = (): RequestHandler => async (_, res) => {
   const items = await latestPilets();
   return res.json({
     items,
   });
 };
 
-export const publishPilet: RequestHandler = (req, res) => {
+export const publishPilet = (rootUrl: string): RequestHandler => (req, res) => {
   const bb = (req as any).busboy;
 
   if (bb) {
     req.pipe(bb);
 
     bb.on('file', (_: any, file: NodeJS.ReadableStream) =>
-      storePilet(file)
+      storePilet(file, rootUrl)
         .then(() =>
           res.status(200).json({
             success: true,

@@ -2,7 +2,6 @@ import { dirname, basename } from 'path';
 import { formatAuthor } from './author';
 import { untar } from './untar';
 import { computeHash } from './hash';
-import { rootUrl } from '../constants';
 import { PiletMetadata, PackageData, PackageFiles, Pilet } from '../types';
 
 const packageRoot = 'package/';
@@ -37,6 +36,7 @@ export function extractPiletMetadata(
   main: string,
   file: string,
   files: PackageFiles,
+  rootUrl: string,
 ): PiletMetadata {
   const name = data.name;
   const version = data.preview ? `${data.version}-pre.${iter++}` : data.version;
@@ -55,14 +55,14 @@ export function extractPiletMetadata(
   };
 }
 
-export function getPiletDefinition(stream: NodeJS.ReadableStream): Promise<Pilet> {
+export function getPiletDefinition(stream: NodeJS.ReadableStream, rootUrl: string): Promise<Pilet> {
   return untar(stream).then(files => {
     const data = getPackageJson(files);
     const path = getPiletMainPath(data, files);
     const root = dirname(path);
     const file = basename(path);
     const main = getContent(path, files);
-    const meta = extractPiletMetadata(data, main, file, files);
+    const meta = extractPiletMetadata(data, main, file, files, rootUrl);
     return {
       meta,
       root,

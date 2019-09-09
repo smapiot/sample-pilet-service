@@ -16,4 +16,4 @@ function getKeys(envKeys: string) {
   return standardKeys;
 }
 
-export const keys = getKeys(process.env.PILET_API_KEYS);
+export const defaultKeys = getKeys(process.env.PILET_API_KEYS);

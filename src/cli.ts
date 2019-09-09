@@ -1,3 +1,5 @@
 #!/usr/bin/env node
 
-import './index';
+import { runApp } from './app';
+
+runApp();

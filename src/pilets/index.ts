@@ -14,7 +14,7 @@ export async function latestPilets() {
   return Object.keys(unique).map(name => unique[name]);
 }
 
-export async function storePilet(file: NodeJS.ReadableStream) {
-  const meta = await getPiletDefinition(file);
+export async function storePilet(file: NodeJS.ReadableStream, rootUrl: string) {
+  const meta = await getPiletDefinition(file, rootUrl);
   await setPilet(meta);
 }
