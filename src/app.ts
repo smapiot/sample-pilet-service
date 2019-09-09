@@ -62,11 +62,11 @@ export function runApp({
     console.info(``);
     console.info(`  URL for uploading pilets:`);
     console.info(``);
-    console.info(`  ${rootUrl}${piletPath}`);
+    console.info(`    ${rootUrl}${piletPath}`);
     console.info(``);
     console.info(`  API keys for publishing:`);
     console.info(``);
-    console.info(`  ${apiKeys.join('\n  ')}`);
+    console.info(`    ${apiKeys.join('\n    ')}`);
     console.info(``);
   });
 }
