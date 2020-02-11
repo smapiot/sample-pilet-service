@@ -5,6 +5,7 @@ import { computeHash } from './hash';
 import { PiletMetadata, PackageData, PackageFiles, Pilet } from '../types';
 
 const packageRoot = 'package/';
+const extractRequireRef = /^\/\/\s*@pilet\s+v:1\s*\(([A-Za-z0-9\_\:\-]+)\)/;
 let iter = 1;
 
 function getPackageJson(files: PackageFiles): PackageData {
@@ -40,10 +41,12 @@ export function extractPiletMetadata(
 ): PiletMetadata {
   const name = data.name;
   const version = data.preview ? `${data.version}-pre.${iter++}` : data.version;
+  const [, requireRef] = extractRequireRef.exec(main || '') || [];
   return {
     name,
-    description: data.description,
     version,
+    requireRef,
+    description: data.description,
     custom: data.custom,
     author: formatAuthor(data.author),
     hash: computeHash(main),

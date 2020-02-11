@@ -2,6 +2,7 @@ export interface PiletMetadata {
   name: string;
   description: string;
   custom?: any;
+  requireRef?: string;
   version: string;
   author: {
     name: string;
