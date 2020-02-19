@@ -15,7 +15,7 @@ export const getFiles = (): RequestHandler => async (req, res) => {
     const path = join(pilet.root, file)
       .split(sep)
       .join('/');
-    const content = pilet.files[path];
+    const content = Buffer.from(pilet.files[path]);
 
     if (content) {
       const tenYears = 24 * 60 * 60 * 365 * 10;
