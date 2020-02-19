@@ -26,6 +26,31 @@ describe('Extract Metadata', () => {
       },
     });
   });
+
+  it('returns requireRef if given', () => {
+    const metaData = extractPiletMetadata(pkg, '//@pilet v:1(foo)', '', {}, '');
+    expect(metaData).toMatchObject({
+      name: 'test',
+      version: '0.1.0',
+      requireRef: 'foo',
+      author: {
+        name: 'User Example',
+        email: 'user@example.com',
+      },
+    });
+  });
+
+  it('skips requireRef for old format', () => {
+    const metaData = extractPiletMetadata(pkg, '//@pilet v:0', '', {}, '');
+    expect(metaData).toMatchObject({
+      name: 'test',
+      version: '0.1.0',
+      author: {
+        name: 'User Example',
+        email: 'user@example.com',
+      },
+    });
+  });
 });
 
 describe('Format Author', () => {
