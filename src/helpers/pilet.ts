@@ -41,7 +41,7 @@ export function extractPiletMetadata(
 ): PiletMetadata {
   const name = data.name;
   const version = data.preview ? `${data.version}-pre.${iter++}` : data.version;
-  const [, requireRef] = extractRequireRef.exec(main || '') || [];
+  const [, requireRef] = extractRequireRef.exec(main || '') || [] as const;
   return {
     name,
     version,
