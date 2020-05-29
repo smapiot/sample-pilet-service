@@ -1,7 +1,7 @@
 import { dirname, basename } from 'path';
 import { formatAuthor } from './author';
 import { untar } from './untar';
-import { computeHash } from './hash';
+import { computeHash, computeIntegrity } from './hash';
 import { PiletMetadata, PackageData, PackageFiles, Pilet } from '../types';
 
 const packageRoot = 'package/';
@@ -41,21 +41,39 @@ export function extractPiletMetadata(
 ): PiletMetadata {
   const name = data.name;
   const version = data.preview ? `${data.version}-pre.${iter++}` : data.version;
-  const [, requireRef] = extractRequireRef.exec(main || '') || [] as const;
-  return {
-    name,
-    version,
-    requireRef,
-    description: data.description,
-    custom: data.custom,
-    author: formatAuthor(data.author),
-    hash: computeHash(main),
-    link: `${rootUrl}/files/${name}/${version}/${file}`,
-    license: {
-      type: data.license || 'ISC',
-      text: getContent(`${packageRoot}LICENSE`, files) || '',
-    },
+  const [, requireRef] = extractRequireRef.exec(main || '') || ([] as const);
+  const author = formatAuthor(data.author);
+  const license = {
+    type: data.license || 'ISC',
+    text: getContent(`${packageRoot}LICENSE`, files) || '',
   };
+
+  if (requireRef) {
+    return {
+      name,
+      version,
+      requireRef,
+      description: data.description,
+      custom: data.custom,
+      author,
+      integrity: computeIntegrity(main),
+      link: `${rootUrl}/files/${name}/${version}/${file}`,
+      type: 'v1',
+      license,
+    };
+  } else {
+    return {
+      name,
+      version,
+      description: data.description,
+      custom: data.custom,
+      author,
+      hash: computeHash(main),
+      link: `${rootUrl}/files/${name}/${version}/${file}`,
+      type: 'v0',
+      license,
+    };
+  }
 }
 
 export function getPiletDefinition(stream: NodeJS.ReadableStream, rootUrl: string): Promise<Pilet> {

@@ -42,7 +42,7 @@ export const getFiles = (): RequestHandler => async (req, res) => {
 export const getLatestPilets = (): RequestHandler => async (_, res) => {
   const items = await latestPilets();
   return res.json({
-    items,
+    items: items.map(({ author: _0, license: _1, description: _2, ...item }) => item),
   });
 };
 

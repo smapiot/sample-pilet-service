@@ -1,20 +1,88 @@
-export interface PiletMetadata {
+export interface PiletMetadataV0 {
+  /**
+   * The content of the pilet. If the content is not available
+   * the link will be used (unless caching has been activated).
+   */
+  content?: string;
+  /**
+   * The link for retrieving the content of the pilet.
+   */
+  link?: string;
+  /**
+   * The computed hash value of the pilet's content. Should be
+   * accurate to allow caching.
+   */
+  hash: string;
+  /**
+   * If available indicates that the pilet should not be cached.
+   * In case of a string this is interpreted as the expiration time
+   * of the cache. In case of an accurate hash this should not be
+   * required or set.
+   */
+  noCache?: boolean | string;
+  /**
+   * The schema type of the pilet.
+   */
+  type: 'v0';
+}
+
+export interface PiletMetadataV1 {
+  /**
+   * The link for retrieving the content of the pilet.
+   */
+  link: string;
+  /**
+   * The reference name for the global require.
+   */
+  requireRef: string;
+  /**
+   * The computed integrity of the pilet. Will be used to set the
+   * integrity value of the script.
+   */
+  integrity?: string;
+  /**
+   * The schema type of the pilet.
+   */
+  type: 'v1';
+}
+
+export interface PiletMetadataBase {
+  /**
+   * The name of the pilet, i.e., the package id.
+   */
   name: string;
-  description: string;
-  custom?: any;
-  requireRef?: string;
+  /**
+   * The version of the pilet. Should be semantically versioned.
+   */
   version: string;
+  /**
+   * Optionally provides some custom metadata for the pilet.
+   */
+  custom?: any;
+  /**
+   * The description of the pilet.
+   */
+  description: string;
+  /**
+   * The author of the pilet.
+   */
   author: {
     name: string;
     email: string;
   };
+  /**
+   * The license of the pilet.
+   */
   license: {
     type: string;
     text: string;
   };
-  link: string;
-  hash: string;
 }
+
+/**
+ * Describes the metadata transported by a pilet.
+ */
+export type PiletMetadata = (PiletMetadataV0 | PiletMetadataV1) & PiletMetadataBase;
 
 export interface Pilet {
   meta: PiletMetadata;

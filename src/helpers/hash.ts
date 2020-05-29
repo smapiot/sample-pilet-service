@@ -5,3 +5,9 @@ export function computeHash(content: string) {
   sha1sum.update(content || '');
   return sha1sum.digest('hex');
 }
+
+export function computeIntegrity(content: string) {
+  const sum = createHash('sha256');
+  sum.update(content || '');
+  return `sha256-${sum.digest('base64')}`;
+}

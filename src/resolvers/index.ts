@@ -12,8 +12,11 @@ const typeDefs = gql`
     version: String
     author: PiletAuthor
     hash: String
+    content: String
     link: String
     custom: JSON
+    integrity: String
+    requireRef: String
   }
 
   type PiletLicense {
@@ -39,15 +42,7 @@ const resolvers: IResolvers = {
   Query: {
     async pilets(_parent: any, _args: any, _context: any) {
       const pilets = await latestPilets();
-      return pilets.map(p => ({
-        name: p.name,
-        description: p.description,
-        version: p.version,
-        author: p.author,
-        hash: p.hash,
-        link: p.link,
-        custom: p.custom,
-      }));
+      return pilets;
     },
     async piletLicense(_parent: any, args: any, _context: any) {
       const { pilet: id } = args;
