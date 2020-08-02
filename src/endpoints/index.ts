@@ -4,29 +4,34 @@ import { lookup } from 'mime-types';
 import { latestPilets, storePilet } from '../pilets';
 import { getPilet } from '../db';
 
-export const getFiles = (): RequestHandler => async (req, res) => {
-  const { name, version, org, file } = req.params;
+export const getFiles = (): RequestHandler => async (req, res, next) => {
+  const { name, version, org, file, 2: directoryPath = '' } = req.params;
   const id = org ? `@${org}/${name}` : name;
   const pilet = await getPilet(id, version);
 
   if (!pilet) {
     res.status(404).send('Pilet not found!');
   } else if (file) {
-    const path = join(pilet.root, file)
+    const path = join(pilet.root, directoryPath, file)
       .split(sep)
       .join('/');
-    const content = Buffer.from(pilet.files[path]);
+    const content = pilet.files[path];
 
     if (content) {
+      const bufferContent = Buffer.from(pilet.files[path]);
       const tenYears = 24 * 60 * 60 * 365 * 10;
 
       res
         .header('Cache-Control', `public, max-age=${tenYears}`)
         .contentType(lookup(file) || 'application/octet-stream')
         .status(200)
-        .send(content);
+        .send(bufferContent);
     } else {
-      res.status(404).send('File not found!');
+      if (file.indexOf('.') !== -1) {
+        res.status(404).send('File not found!');
+      } else {
+        next();
+      }
     }
   } else {
     const files = Object.keys(pilet.files)
