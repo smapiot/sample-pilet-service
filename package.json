@@ -1,6 +1,6 @@
 {
   "name": "sample-pilet-service",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Piral: Sample pilet feed service.",
   "main": "dist",
   "typings": "dist",
@@ -39,25 +39,25 @@
   },
   "license": "MIT",
   "dependencies": {
-    "apollo-server-express": "^2.14.1",
+    "apollo-server-express": "^2.17.0",
     "connect-busboy": "^0.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "graphql": "^14.4.2",
-    "graphql-type-json": "^0.3.0",
+    "graphql": "^14.7.0",
+    "graphql-type-json": "^0.3.2",
     "mime-types": "^2.1.27",
-    "pm2": "^4.4.0",
+    "pm2": "^4.4.1",
     "response-time": "^2.3.2",
-    "tar": "^6.0.2"
+    "tar": "^6.0.5"
   },
   "devDependencies": {
     "@types/connect-busboy": "^0.0.2",
-    "@types/cors": "^2.8.5",
-    "@types/express": "^4.17.6",
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.8",
     "@types/graphql-type-json": "^0.3.0",
     "@types/jest": "^25.2.3",
     "@types/mime-types": "^2.1.0",
-    "@types/node": "^11.15.14",
+    "@types/node": "^11.15.25",
     "@types/response-time": "^2.3.3",
     "@types/tar": "^4.0.3",
     "dotenv": "^8.2.0",
@@ -69,6 +69,6 @@
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.7"
   }
 }
