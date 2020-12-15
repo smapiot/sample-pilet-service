@@ -65,7 +65,7 @@ export const publishPilet = (rootUrl: string): RequestHandler => (req, res) => {
           }),
         )
         .catch(err =>
-          res.status(400).json({
+          res.status(err.message?.indexOf('already exists') !== -1 ? 409 : 400).json({
             success: false,
             message: err.message,
           }),

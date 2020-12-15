@@ -46,6 +46,13 @@ export async function latestPilets() {
 }
 
 export async function storePilet(file: NodeJS.ReadableStream, rootUrl: string) {
-  const meta = await getPiletDefinition(file, rootUrl);
-  await setPilet(meta);
+  const pilet = await getPiletDefinition(file, rootUrl);
+  const { name, version } = pilet.meta;
+  const exists = await getPilets().then(m => m.some(m => m.meta.name === name && m.meta.version === version));
+
+  if (exists) {
+    throw new Error(`A pilet with name "${name}" and version "${version}" already exists.`);
+  }
+
+  await setPilet(pilet);
 }
