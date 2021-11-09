@@ -5,7 +5,9 @@ import { computeHash, computeIntegrity } from './hash';
 import { PiletMetadata, PackageData, PackageFiles, Pilet } from '../types';
 
 const packageRoot = 'package/';
-const extractRequireRef = /^\/\/\s*@pilet\s+v:1\s*\(([A-Za-z0-9\_\:\-]+)\)/;
+const checkV1 = /^\/\/\s*@pilet\s+v:1\s*\(([A-Za-z0-9\_\:\-]+)\)/;
+const checkV2 = /^\/\/\s*@pilet\s+v:2\s*\(([A-Za-z0-9\_\:\-]+)\s*,\s*(.*)\)/;
+const checkVx = /^\/\/\s*@pilet\s+v:x\s*(?:\((.*)\))?/;
 let iter = 1;
 
 function getPackageJson(files: PackageFiles): PackageData {
@@ -32,6 +34,20 @@ function getPiletMainPath(data: PackageData, files: PackageFiles) {
   return paths.map(filePath => `${packageRoot}${filePath}`).filter(filePath => !!files[filePath])[0];
 }
 
+function getDependencies(deps: string) {
+  try {
+    const depMap = JSON.parse(deps);
+
+    if (depMap && typeof depMap === 'object') {
+      if (Object.keys(depMap).every(m => typeof depMap[m] === 'string')) {
+        return depMap;
+      }
+    }
+  } catch {}
+
+  return {};
+}
+
 export function extractPiletMetadata(
   data: PackageData,
   main: string,
@@ -41,36 +57,68 @@ export function extractPiletMetadata(
 ): PiletMetadata {
   const name = data.name;
   const version = data.preview ? `${data.version}-pre.${iter++}` : data.version;
-  const [, requireRef] = extractRequireRef.exec(main || '') || ([] as const);
   const author = formatAuthor(data.author);
   const license = {
     type: data.license || 'ISC',
     text: getContent(`${packageRoot}LICENSE`, files) || '',
   };
 
-  if (requireRef) {
+  if (checkV1.test(main)) {
+    // uses single argument; requireRef (required)
+    const [, requireRef] = checkV1.exec(main);
     return {
       name,
       version,
+      type: 'v1',
       requireRef,
       description: data.description,
       custom: data.custom,
       author,
       integrity: computeIntegrity(main),
       link: `${rootUrl}/files/${name}/${version}/${file}`,
-      type: 'v1',
+      license,
+    };
+  } else if (checkV2.test(main)) {
+    // uses two arguments; requireRef and dependencies as JSON (required)
+    const [, requireRef, plainDependencies] = checkV2.exec(main);
+    return {
+      name,
+      version,
+      type: 'v2',
+      requireRef,
+      description: data.description || '',
+      integrity: computeIntegrity(main),
+      author: formatAuthor(data.author),
+      custom: data.custom,
+      dependencies: getDependencies(plainDependencies),
+      link: `${rootUrl}/files/${name}/${version}/${file}`,
+      license,
+    };
+  } else if (checkVx.test(main)) {
+    // uses single argument; spec identifier (optional)
+    const [, spec] = checkVx.exec(main);
+    return {
+      name,
+      version,
+      type: `vx`,
+      spec,
+      description: data.description || '',
+      integrity: computeIntegrity(main),
+      author: formatAuthor(data.author),
+      custom: data.custom,
+      link: `${rootUrl}/files/${name}/${version}/${file}`,
       license,
     };
   } else {
     return {
       name,
       version,
+      type: 'v0',
       description: data.description,
       custom: data.custom,
       author,
       hash: computeHash(main),
       link: `${rootUrl}/files/${name}/${version}/${file}`,
-      type: 'v0',
       license,
     };
   }
