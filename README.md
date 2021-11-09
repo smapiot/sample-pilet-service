@@ -1,6 +1,6 @@
-[![Piral Logo](https://github.com/smapiot/piral/raw/master/docs/assets/logo.png)](https://piral.io)
+[![Piral Logo](https://github.com/smapiot/piral/raw/main/docs/assets/logo.png)](https://piral.io)
 
-# [Sample Pilet Feed](https://piral.io) &middot; [![Build Status](https://smapiot.visualstudio.com/piral/_apis/build/status/smapiot.sample-pilet-service?branchName=master)](https://smapiot.visualstudio.com/piral/_build/latest?definitionId=14&branchName=master) [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/smapiot/piral/blob/master/LICENSE) [![GitHub Tag](https://img.shields.io/github/tag/smapiot/piral.svg)](https://github.com/smapiot/piral/releases) [![Gitter Chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/piral-io/community)
+# [Sample Pilet Feed](https://piral.io) &middot; [![Build Status](https://smapiot.visualstudio.com/piral/_apis/build/status/smapiot.sample-pilet-service?branchName=master)](https://smapiot.visualstudio.com/piral/_build/latest?definitionId=14&branchName=master) [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/smapiot/piral/blob/main/LICENSE) [![GitHub Tag](https://img.shields.io/github/tag/smapiot/piral.svg)](https://github.com/smapiot/piral/releases) [![Gitter Chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/piral-io/community)
 
 A simple Node.js sample pilet feed service for use with Piral.
 
