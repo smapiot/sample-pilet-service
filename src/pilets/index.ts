@@ -16,6 +16,7 @@ function getPilet(pilet: PiletMetadata) {
         hash: pilet.hash,
         noCache: pilet.noCache,
         custom: pilet.custom,
+        spec: 'v0',
       };
     case 'v1':
       return {
@@ -28,6 +29,33 @@ function getPilet(pilet: PiletMetadata) {
         requireRef: pilet.requireRef,
         integrity: pilet.integrity,
         custom: pilet.custom,
+        spec: 'v1',
+      };
+    case 'v2':
+      return {
+        name: pilet.name,
+        description: pilet.description,
+        author: pilet.author,
+        license: pilet.license,
+        version: pilet.version,
+        link: pilet.link,
+        requireRef: pilet.requireRef,
+        integrity: pilet.integrity,
+        custom: pilet.custom,
+        dependencies: pilet.dependencies,
+        spec: 'v2',
+      };
+    case 'vx':
+      return {
+        name: pilet.name,
+        description: pilet.description,
+        author: pilet.author,
+        license: pilet.license,
+        version: pilet.version,
+        link: pilet.link,
+        integrity: pilet.integrity,
+        custom: pilet.custom,
+        spec: pilet.spec || 'vx',
       };
     default:
       return pilet;
