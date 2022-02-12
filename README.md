@@ -1,8 +1,8 @@
 [![Piral Logo](https://github.com/smapiot/piral/raw/main/docs/assets/logo.png)](https://piral.io)
 
-# [Sample Pilet Feed](https://piral.io) &middot; [![Build Status](https://smapiot.visualstudio.com/piral/_apis/build/status/smapiot.sample-pilet-service?branchName=master)](https://smapiot.visualstudio.com/piral/_build/latest?definitionId=14&branchName=master) [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/smapiot/piral/blob/main/LICENSE) [![GitHub Tag](https://img.shields.io/github/tag/smapiot/piral.svg)](https://github.com/smapiot/piral/releases) [![Gitter Chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/piral-io/community)
+# [Sample Pilet Feed](https://piral.io) &middot; [![Build Status](https://smapiot.visualstudio.com/piral/_apis/build/status/smapiot.sample-pilet-service?branchName=main)](https://smapiot.visualstudio.com/piral/_build/latest?definitionId=14&branchName=main) [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/smapiot/piral/blob/main/LICENSE) [![GitHub Tag](https://img.shields.io/github/tag/smapiot/piral.svg)](https://github.com/smapiot/piral/releases) [![Gitter Chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/piral-io/community)
 
-A simple Node.js sample pilet feed service for use with Piral.
+A simple Node.js sample pilet feed service for use with Piral. If you don't want to play around with a feed service locally then use the (free) community edition of the [official Piral Feed Service](https://feed.piral.cloud/). Alternatively, if you are interested in more beef such as running the official Piral Feed Service in your environment or accessing premium features in the online edition then have a look at [Piral Cloud website](https://www.piral.cloud/).
 
 ## Getting Started
 

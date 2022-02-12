@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-    - master
+    - main
     - develop
 
 pool:
@@ -21,7 +21,7 @@ steps:
 - script: |
     sed -i -e "s/\(\"version\":\\s\+\"\([0-9]\+\.\?\)\+\)/\1-pre.$BUILD_BUILDNUMBER/" package.json;
   displayName: 'Preview version'
-  condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/main'))
 
 - script: |
     npm pack
@@ -32,4 +32,4 @@ steps:
     command: publish
     publishEndpoint: 'NPM connection 1'
   displayName: 'Publish package'
-  condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/master', 'refs/heads/develop'))
+  condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/main', 'refs/heads/develop'))
