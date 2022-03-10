@@ -40,7 +40,7 @@
   "license": "MIT",
   "dependencies": {
     "apollo-server-express": "^2.25.3",
-    "connect-busboy": "^0.0.2",
+    "connect-busboy": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "graphql": "^14.7.0",
@@ -51,7 +51,7 @@
     "tar": "^6.1.11"
   },
   "devDependencies": {
-    "@types/connect-busboy": "^0.0.2",
+    "@types/connect-busboy": "^0.0.3",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/graphql-type-json": "^0.3.0",
