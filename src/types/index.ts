@@ -163,3 +163,12 @@ export interface PackageData {
     [name: string]: string;
   };
 }
+
+export interface ActiveAuthRequest {
+  id: string;
+  clientId: string;
+  clientName: string;
+  description: string;
+  notifiers: Array<(success: boolean) => void>;
+  status: string;
+}
