@@ -145,12 +145,12 @@ export interface PackageData {
   preview?: boolean;
   custom?: any;
   author:
-    | string
-    | {
-        name?: string;
-        url?: string;
-        email?: string;
-      };
+  | string
+  | {
+    name?: string;
+    url?: string;
+    email?: string;
+  };
   main?: string;
   license?: string;
   dependencies?: {

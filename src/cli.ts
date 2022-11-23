@@ -2,4 +2,5 @@
 
 import { runApp } from './app';
 
-runApp();
+runApp()
+  .catch(err => { console.error(err); process.exit(1); });

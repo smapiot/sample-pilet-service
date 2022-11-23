@@ -1,8 +1,8 @@
 .editorconfig
+.eslintrc.js
 .gitignore
 Dockerfile
 tsconfig.json
-tslint.json
 *.tgz
 jest.config.js
 prettier.config.js
