@@ -1,6 +1,9 @@
 import { GraphQLJSON } from 'graphql-type-json';
 import { Application } from 'express';
-import { ApolloServer, gql, IResolvers } from 'apollo-server-express';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
+import { IResolvers } from '@graphql-tools/utils';
+import { gql } from 'graphql-tag';
 import { latestPilets } from '../pilets';
 
 const typeDefs = gql`
@@ -64,8 +67,8 @@ const resolvers: IResolvers = {
   JSON: GraphQLJSON,
 };
 
-export function withGql(app: Application) {
+export async function withGql(app: Application) {
   const server = new ApolloServer({ typeDefs, resolvers });
-  server.applyMiddleware({ app, path: '/' });
-  return app;
+  await server.start();
+  app.use('/', expressMiddleware(server));
 }

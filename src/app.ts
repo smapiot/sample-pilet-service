@@ -39,7 +39,7 @@ export interface AppOptions {
   port?: number;
 }
 
-export function runApp({
+export async function runApp({
   filePath = defaultFilePath,
   piletPath = defaultPiletPath,
   authPath = defaultAuthPath,
@@ -86,7 +86,8 @@ export function runApp({
 
   app.get(filePath, getFiles());
 
-  return withGql(app).listen(port, () => {
+  await withGql(app);
+  app.listen(port, () => {
     console.info(`Pilet feed fervice started on port ${port}.`);
     console.info(``);
     console.info(`  URL for uploading pilets:`);
