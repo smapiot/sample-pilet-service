@@ -1,4 +1,4 @@
-import { Pilet } from '../types';
+import { ActiveAuthRequest, Pilet } from '../types';
 
 const piletData: Record<string, Record<string, Pilet>> = {};
 
@@ -26,5 +26,22 @@ export async function setPilet(pilet: Pilet) {
   piletData[meta.name] = {
     ...current,
     [meta.version]: pilet,
+  };
+}
+
+const activeAuthRequests: Array<ActiveAuthRequest> = [];
+
+export function getActiveAuthRequest(id: string) {
+  return activeAuthRequests.find(r => r.id === id);
+}
+
+export function appendAuthRequest(request: ActiveAuthRequest) {
+  activeAuthRequests.push(request);
+
+  return () => {
+    const idx = activeAuthRequests.indexOf(request);
+    const req = activeAuthRequests[idx];
+    activeAuthRequests.splice(idx, 1);
+    req.notifiers.forEach(n => n(false));
   };
 }

@@ -47,7 +47,7 @@
     "graphql-tag": "^2.12.6",
     "graphql-type-json": "^0.3.2",
     "mime-types": "^2.1.35",
-    "pm2": "^5.2.0",
+    "pm2": "^5.2.2",
     "response-time": "^2.3.2",
     "tar": "^6.1.11"
   },
