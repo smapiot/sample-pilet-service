@@ -2,7 +2,5 @@
 
 import { runApp } from './app';
 
-// Standard async IIFE for top-level-await.
-(async () => {
-  await runApp();
-})();
+runApp()
+  .catch(err => { console.error(err); process.exit(1); });
