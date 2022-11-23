@@ -2,4 +2,7 @@
 
 import { runApp } from './app';
 
-runApp();
+// Standard async IIFE for top-level-await.
+(async () => {
+  await runApp();
+})();
