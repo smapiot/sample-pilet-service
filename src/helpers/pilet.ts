@@ -34,7 +34,6 @@ function getPiletMainPath(data: PackageData, files: PackageFiles) {
   return paths.map(filePath => `${packageRoot}${filePath}`).filter(filePath => !!files[filePath])[0];
 }
 
-
 function getDependencies(deps: string, rootUrl: string, name: string, version: string) {
   try {
     const depMap = JSON.parse(deps);
@@ -58,6 +57,13 @@ function getDependencies(deps: string, rootUrl: string, name: string, version: s
   } catch { }
 
   return {};
+}
+
+function evalDep(dependency: string, rootUrl: string, name: string, version: string): any {
+  if(dependency.includes(rootUrl)) {
+    return dependency;
+  }
+  return `${rootUrl}/files/${name}/${version}/${dependency}`;
 }
 
 export function extractPiletMetadata(
@@ -150,11 +156,5 @@ export function getPiletDefinition(stream: NodeJS.ReadableStream, rootUrl: strin
       files,
     };
   });
-}
-function evalDep(dependency: string, rootUrl: string, name: string, version: string): any {
-  if(dependency.includes(rootUrl)) {
-    return dependency;
-  }
-  return `${rootUrl}/files/${name}/${version}/${dependency}`;
 }
 
