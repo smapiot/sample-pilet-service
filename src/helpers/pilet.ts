@@ -34,16 +34,30 @@ function getPiletMainPath(data: PackageData, files: PackageFiles) {
   return paths.map(filePath => `${packageRoot}${filePath}`).filter(filePath => !!files[filePath])[0];
 }
 
-function getDependencies(deps: string) {
+
+function getDependencies(deps: string, rootUrl: string, name: string, version: string) {
   try {
     const depMap = JSON.parse(deps);
 
     if (depMap && typeof depMap === 'object') {
-      if (Object.keys(depMap).every(m => typeof depMap[m] === 'string')) {
+      if (Object.keys(depMap).every(m => typeof depMap[m] === 'string')  ) {
+
+        const updateDepMapUrls = <K extends keyof typeof depMap>(
+          obj: typeof depMap,
+          key: K,
+          upDatedValue: (typeof depMap)[K]
+        ): void => {
+          obj[key] = upDatedValue;
+        }
+
+        Object.keys(depMap).forEach(k => updateDepMapUrls(depMap, k, evalDep(depMap[k], rootUrl, name, version)))
+
+        console.log(depMap);
+
         return depMap;
       }
     }
-  } catch {}
+  } catch { }
 
   return {};
 }
@@ -90,7 +104,7 @@ export function extractPiletMetadata(
       integrity: computeIntegrity(main),
       author: formatAuthor(data.author),
       custom: data.custom,
-      dependencies: getDependencies(plainDependencies),
+      dependencies: getDependencies(plainDependencies, rootUrl, name, version),
       link: `${rootUrl}/files/${name}/${version}/${file}`,
       license,
     };
@@ -139,3 +153,10 @@ export function getPiletDefinition(stream: NodeJS.ReadableStream, rootUrl: strin
     };
   });
 }
+function evalDep(dependency: string, rootUrl: string, name: string, version: string): any {
+  if(dependency.includes(rootUrl)) {
+    return dependency;
+  }
+  return `${rootUrl}/files/${name}/${version}/${dependency}`;
+}
+
