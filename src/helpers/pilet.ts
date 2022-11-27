@@ -52,8 +52,6 @@ function getDependencies(deps: string, rootUrl: string, name: string, version: s
 
         Object.keys(depMap).forEach(k => updateDepMapUrls(depMap, k, evalDep(depMap[k], rootUrl, name, version)))
 
-        console.log(depMap);
-
         return depMap;
       }
     }
