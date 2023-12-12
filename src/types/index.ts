@@ -70,6 +70,46 @@ export interface PiletMetadataV2 {
   dependencies?: Record<string, string>;
 }
 
+export interface PiletMetadataV3 {
+  /**
+   * The link for retrieving the content of the pilet.
+   */
+  link: string;
+  /**
+   * The reference name for the global require.
+   */
+  requireRef: string;
+  /**
+   * The computed integrity of the pilet. Will be used to set the
+   * integrity value of the script.
+   */
+  integrity?: string;
+  /**
+   * The schema type of the pilet.
+   */
+  type: 'v3';
+  /**
+   * The dependencies that should be loaded for this pilet.
+   */
+  dependencies?: Record<string, string>;
+}
+
+export interface PiletMetadataMF {
+  /**
+   * The link for retrieving the content of the pilet.
+   */
+  link: string;
+  /**
+   * The computed integrity of the pilet. Will be used to set the
+   * integrity value of the script.
+   */
+  integrity?: string;
+  /**
+   * The schema type of the pilet.
+   */
+  type: 'mf';
+}
+
 export interface PiletMetadataVx {
   /**
    * The link for retrieving the content of the pilet.
@@ -126,7 +166,7 @@ export interface PiletMetadataBase {
 /**
  * Describes the metadata transported by a pilet.
  */
-export type PiletMetadata = (PiletMetadataV0 | PiletMetadataV1 | PiletMetadataV2 | PiletMetadataVx) & PiletMetadataBase;
+export type PiletMetadata = (PiletMetadataV0 | PiletMetadataV1 | PiletMetadataV2 | PiletMetadataV3 | PiletMetadataMF | PiletMetadataVx) & PiletMetadataBase;
 
 export interface Pilet {
   meta: PiletMetadata;
