@@ -1,8 +1,6 @@
-import { readFromSnapshot, updateSnapshot } from './snapshot';
-import type { PiletDb } from './types';
-import type { ActiveAuthRequest, Pilet } from '../types';
+import type { PiletDb, ActiveAuthRequest, Pilet } from '../types';
 
-const piletData: PiletDb = {};
+export const piletData: PiletDb = {};
 
 export async function getPilets(): Promise<Array<Pilet>> {
   const pilets: Array<Pilet> = [];
@@ -31,7 +29,6 @@ export async function setPilet(pilet: Pilet) {
       [version]: pilet,
     },
   };
-  updateSnapshot(piletData);
 }
 
 const activeAuthRequests: Array<ActiveAuthRequest> = [];
@@ -50,5 +47,3 @@ export function appendAuthRequest(request: ActiveAuthRequest) {
     req.notifiers.forEach((n) => n(false));
   };
 }
-
-readFromSnapshot(piletData);

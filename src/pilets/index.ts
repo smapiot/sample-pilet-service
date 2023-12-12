@@ -1,4 +1,4 @@
-import { getPilets, setPilet } from '../db';
+import { getPilets, setPilet, piletData } from '../db';
 import { getPiletDefinition } from '../helpers';
 import { PiletMetadata } from '../types';
 
@@ -86,4 +86,5 @@ export async function storePilet(file: NodeJS.ReadableStream, rootUrl: string) {
   }
 
   await setPilet(pilet);
+  return piletData;
 }

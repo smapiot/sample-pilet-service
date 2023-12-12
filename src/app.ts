@@ -4,6 +4,8 @@ import * as cors from 'cors';
 import * as busboy from 'connect-busboy';
 import { defaultKeys } from './auth';
 import { withGql } from './resolvers';
+import { piletData } from './db';
+import { useSnapshot } from './db/snapshot';
 import { checkAuth, checkAuthRequestId } from './middleware';
 import {
   getAuthStatus,
@@ -19,6 +21,7 @@ import {
   defaultPiletPath,
   defaultFilePath,
   defaultPort,
+  defaultSnapshotDir,
   defaultProtocol,
   defaultLoginPath,
 } from './constants';
@@ -36,6 +39,7 @@ export interface AppOptions {
   filePath?: string;
   rootUrl?: string;
   apiKeys?: Array<string>;
+  snapshotDir?: string;
   port?: number;
 }
 
@@ -46,11 +50,13 @@ export async function runApp({
   loginPath = defaultLoginPath,
   port = defaultPort,
   apiKeys = defaultKeys,
+  snapshotDir = defaultSnapshotDir,
   rootUrl = getUrl(port),
 }: AppOptions = {}) {
   const app = express();
   const authUrl = `${rootUrl}${authPath}`;
   const loginUrl = `${rootUrl}${loginPath}`;
+  const snapshot = useSnapshot(snapshotDir);
 
   app.use(
     cors({
@@ -82,12 +88,13 @@ export async function runApp({
 
   app.get(piletPath, getLatestPilets());
 
-  app.post(piletPath, checkAuth(apiKeys, authUrl, 'publish-pilet'), publishPilet(rootUrl));
+  app.post(piletPath, checkAuth(apiKeys, authUrl, 'publish-pilet'), publishPilet(rootUrl, snapshot));
 
   app.get(filePath, getFiles());
 
   await withGql(app);
-  
+  await snapshot.read(piletData);
+
   return app.listen(port, () => {
     console.info(`Pilet feed fervice started on port ${port}.`);
     console.info(``);

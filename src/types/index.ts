@@ -171,3 +171,10 @@ export interface ActiveAuthRequest {
   notifiers: Array<(success: boolean) => void>;
   status: string;
 }
+
+export interface PiletVersions {
+  current: string;
+  versions: Record<string, Pilet>;
+}
+
+export type PiletDb = Record<string, PiletVersions>;
