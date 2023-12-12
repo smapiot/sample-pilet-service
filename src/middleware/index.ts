@@ -8,23 +8,21 @@ function checkKey(authHeader: string, keys: Array<string>, scopes: Array<string>
   return result && keys.includes(result[1]);
 }
 
-export const checkAuth = (keys: Array<string>, authUrl: string, ...scopes: Array<string>): RequestHandler => async (
-  req,
-  res,
-  next,
-) => {
-  const authorized = await checkKey(req.headers.authorization, keys, scopes);
+export const checkAuth =
+  (keys: Array<string>, authUrl: string, ...scopes: Array<string>): RequestHandler =>
+  async (req, res, next) => {
+    const authorized = await checkKey(req.headers.authorization, keys, scopes);
 
-  if (!authorized) {
-    res.status(401).json({
-      success: false,
-      interactiveAuth: authUrl,
-      message: 'Invalid API key supplied.',
-    });
-  } else {
-    next();
-  }
-};
+    if (!authorized) {
+      res.status(401).json({
+        success: false,
+        interactiveAuth: authUrl,
+        message: 'Invalid API key supplied.',
+      });
+    } else {
+      next();
+    }
+  };
 
 export const checkAuthRequestId = (): RequestHandler => async (req, res, next) => {
   const { id } = req.query;

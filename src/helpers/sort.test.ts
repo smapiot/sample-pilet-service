@@ -2,7 +2,7 @@ import { sortPilets } from './sort';
 
 describe('Sort Pilets', () => {
   it('works against empty data', () => {
-    const names = sortPilets([]).map(m => m.name);
+    const names = sortPilets([]).map((m) => m.name);
     expect(names).toEqual([]);
   });
 
@@ -12,12 +12,14 @@ describe('Sort Pilets', () => {
       { name: 'bar' } as any,
       { name: 'a' } as any,
       { name: 'z' } as any,
-    ]).map(m => m.name);
+    ]).map((m) => m.name);
     expect(names).toEqual(['a', 'bar', 'foo', 'z']);
   });
 
   it('works against just ordered names', () => {
-    const names = sortPilets([{ name: 'zlB' } as any, { name: 'zlD' } as any, { name: 'zlA' } as any]).map(m => m.name);
+    const names = sortPilets([{ name: 'zlB' } as any, { name: 'zlD' } as any, { name: 'zlA' } as any]).map(
+      (m) => m.name,
+    );
     expect(names).toEqual(['zlA', 'zlB', 'zlD']);
   });
 
@@ -29,7 +31,7 @@ describe('Sort Pilets', () => {
       { name: 'zlD' } as any,
       { name: 'zlE' } as any,
       { name: 'zlA' } as any,
-    ]).map(m => m.name);
+    ]).map((m) => m.name);
     expect(names).toEqual(['zlA', 'zlB', 'zlD', 'zlE', 'zlF', 'zlG']);
   });
 });

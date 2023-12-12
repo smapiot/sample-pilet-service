@@ -1,6 +1,6 @@
 {
   "name": "sample-pilet-service",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "Piral: Sample pilet feed service.",
   "main": "dist",
   "typings": "dist",
@@ -11,13 +11,13 @@
     "test": "npm run lint && npm run test:unit",
     "start": "node dist/cli.js",
     "watch": "node index.js",
-    "lint": "eslint -c .eslintrc.js src/**/*.ts",
+    "lint": "eslint -c .eslintrc.js 'src/**/*.ts'",
     "prettier": "prettier --config prettier.config.js --write 'src/**/*.ts'",
     "build": "tsc --project tsconfig.json",
-    "serve": "pm2-runtime dist/index.js"
+    "serve": "node dist/index.js"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=16.0.0"
   },
   "bin": {
     "sample-pilet-service": "./dist/cli.js"
@@ -39,40 +39,39 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@apollo/server": "^4.1.1",
+    "@apollo/server": "^4.9.5",
     "connect-busboy": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "graphql-type-json": "^0.3.2",
     "mime-types": "^2.1.35",
-    "pm2": "^5.2.2",
     "response-time": "^2.3.2",
-    "tar": "^6.1.11"
+    "tar": "^6.2.0"
   },
   "devDependencies": {
     "@types/connect-busboy": "^0.0.3",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
     "@types/graphql-type-json": "^0.3.0",
-    "@types/jest": "^27.5.2",
+    "@types/jest": "^29.5.11",
     "@types/mime-types": "^2.1.1",
-    "@types/node": "^11.15.54",
+    "@types/node": "^16",
     "@types/response-time": "^2.3.5",
-    "@types/tar": "^4.0.5",
-    "@typescript-eslint/eslint-plugin": "^5.44.0",
-    "@typescript-eslint/parser": "^5.44.0",
-    "dotenv": "^8.6.0",
-    "eslint": "^8.28.0",
+    "@types/tar": "^6.1.10",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.55.0",
     "eslint-plugin-no-null": "^1.0.2",
-    "eslint-plugin-react": "^7.31.11",
-    "jest": "^27.5.1",
-    "jest-cli": "^27.5.1",
-    "minimatch": "^3.1.2",
-    "prettier": "^1.19.1",
-    "ts-jest": "^27.1.5",
-    "ts-node": "^10.9.1",
-    "typescript": "^4"
+    "eslint-plugin-react": "^7.33.2",
+    "jest": "^29.7.0",
+    "jest-cli": "^29.7.0",
+    "minimatch": "^9.0.3",
+    "prettier": "^3.1.1",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
   }
 }

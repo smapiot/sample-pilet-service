@@ -5,8 +5,8 @@ const piletData: Record<string, Record<string, Pilet>> = {};
 export async function getPilets(): Promise<Array<Pilet>> {
   const pilets: Array<Pilet> = [];
 
-  Object.keys(piletData).forEach(name =>
-    Object.keys(piletData[name]).forEach(version => {
+  Object.keys(piletData).forEach((name) =>
+    Object.keys(piletData[name]).forEach((version) => {
       const pilet = piletData[name][version];
       pilets.push(pilet);
     }),
@@ -32,7 +32,7 @@ export async function setPilet(pilet: Pilet) {
 const activeAuthRequests: Array<ActiveAuthRequest> = [];
 
 export function getActiveAuthRequest(id: string) {
-  return activeAuthRequests.find(r => r.id === id);
+  return activeAuthRequests.find((r) => r.id === id);
 }
 
 export function appendAuthRequest(request: ActiveAuthRequest) {
@@ -42,6 +42,6 @@ export function appendAuthRequest(request: ActiveAuthRequest) {
     const idx = activeAuthRequests.indexOf(request);
     const req = activeAuthRequests[idx];
     activeAuthRequests.splice(idx, 1);
-    req.notifiers.forEach(n => n(false));
+    req.notifiers.forEach((n) => n(false));
   };
 }

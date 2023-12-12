@@ -50,7 +50,7 @@ const resolvers: IResolvers = {
     async piletLicense(_parent: any, args: any, _context: any) {
       const { pilet: id } = args;
       const pilets = await latestPilets();
-      const [pilet] = pilets.filter(m => m.name === id);
+      const [pilet] = pilets.filter((m) => m.name === id);
 
       if (pilet) {
         return {

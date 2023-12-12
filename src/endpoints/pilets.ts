@@ -12,9 +12,7 @@ export const getFiles = (): RequestHandler => async (req, res, next) => {
   if (!pilet) {
     res.status(404).send('Pilet not found!');
   } else if (file) {
-    const path = join(pilet.root, directoryPath, file)
-      .split(sep)
-      .join('/');
+    const path = join(pilet.root, directoryPath, file).split(sep).join('/');
     const content = pilet.files[path];
 
     if (content) {
@@ -35,8 +33,8 @@ export const getFiles = (): RequestHandler => async (req, res, next) => {
     }
   } else {
     const files = Object.keys(pilet.files)
-      .map(m => relative(pilet.root, m))
-      .filter(m => m.indexOf(sep) === -1);
+      .map((m) => relative(pilet.root, m))
+      .filter((m) => m.indexOf(sep) === -1);
 
     res.status(200).json({
       items: files,
@@ -51,30 +49,32 @@ export const getLatestPilets = (): RequestHandler => async (_, res) => {
   });
 };
 
-export const publishPilet = (rootUrl: string): RequestHandler => (req, res) => {
-  const bb = (req as any).busboy;
+export const publishPilet =
+  (rootUrl: string): RequestHandler =>
+  (req, res) => {
+    const bb = (req as any).busboy;
 
-  if (bb) {
-    req.pipe(bb);
+    if (bb) {
+      req.pipe(bb);
 
-    bb.on('file', (_: any, file: NodeJS.ReadableStream) =>
-      storePilet(file, rootUrl)
-        .then(() =>
-          res.status(200).json({
-            success: true,
-          }),
-        )
-        .catch(err =>
-          res.status(err.message?.indexOf('already exists') !== -1 ? 409 : 400).json({
-            success: false,
-            message: err.message,
-          }),
-        ),
-    );
-  } else {
-    res.status(400).json({
-      success: false,
-      message: 'Missing file upload.',
-    });
-  }
-};
+      bb.on('file', (_: any, file: NodeJS.ReadableStream) =>
+        storePilet(file, rootUrl)
+          .then(() =>
+            res.status(200).json({
+              success: true,
+            }),
+          )
+          .catch((err) =>
+            res.status(err.message?.indexOf('already exists') !== -1 ? 409 : 400).json({
+              success: false,
+              message: err.message,
+            }),
+          ),
+      );
+    } else {
+      res.status(400).json({
+        success: false,
+        message: 'Missing file upload.',
+      });
+    }
+  };
