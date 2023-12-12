@@ -130,7 +130,6 @@ export type PiletMetadata = (PiletMetadataV0 | PiletMetadataV1 | PiletMetadataV2
 
 export interface Pilet {
   meta: PiletMetadata;
-  root: string;
   files: PackageFiles;
 }
 

@@ -151,8 +151,11 @@ export function getPiletDefinition(stream: NodeJS.ReadableStream, rootUrl: strin
     const meta = extractPiletMetadata(data, main, file, files, rootUrl);
     return {
       meta,
-      root,
-      files,
+      files: Object.fromEntries(
+        Object.entries(files)
+          .filter(([name]) => name.startsWith(`${root}/`))
+          .map(([name, buffer]) => [name.substring(root.length + 1), buffer]),
+      ),
     };
   });
 }

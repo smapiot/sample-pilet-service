@@ -43,7 +43,12 @@ For the pilets the reported URL is `http://localhost/...` unless changed via `sr
 | WEBSITE_HOSTNAME       | The name of the host, e.g., `localhost`                                         |
 | PORT                   | The port, otherwise falling back to 9000                                        |
 | HTTPS                  | Is HTTPS active, otherwise falling back to HTTP                                 |
+| PILETS_SNAPSHOT        | Defines the path of the database snapshot directory                             |
 | HTTP_X_FORWARDED_PROTO | The used protocol (e.g., `http`), otherwise falling back to the `HTTPS` setting |
+
+## Snapshot
+
+By default, the service creates a directory called `pilets` in the current working directory. If you don't want this (i.e., no snapshot should be created) then set the `PILETS_SNAPSHOT` environment variable to an empty string i.e., `PILETS_SNAPSHOT=""`. Otherwise, if you want to use another directory, set the variable to a directory, e.g., `PILETS_SNAPSHOT=/tmp/pilets`.
 
 ## Usage via NPM
 

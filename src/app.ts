@@ -87,6 +87,7 @@ export async function runApp({
   app.get(filePath, getFiles());
 
   await withGql(app);
+  
   app.listen(port, () => {
     console.info(`Pilet feed fervice started on port ${port}.`);
     console.info(``);
@@ -99,4 +100,6 @@ export async function runApp({
     console.info(`    ${apiKeys.join('\n    ')}`);
     console.info(``);
   });
+
+  return app;
 }

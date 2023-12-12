@@ -1,32 +1,37 @@
-import { ActiveAuthRequest, Pilet } from '../types';
+import { readFromSnapshot, updateSnapshot } from './snapshot';
+import type { PiletDb } from './types';
+import type { ActiveAuthRequest, Pilet } from '../types';
 
-const piletData: Record<string, Record<string, Pilet>> = {};
+const piletData: PiletDb = {};
 
 export async function getPilets(): Promise<Array<Pilet>> {
   const pilets: Array<Pilet> = [];
 
-  Object.keys(piletData).forEach((name) =>
-    Object.keys(piletData[name]).forEach((version) => {
-      const pilet = piletData[name][version];
-      pilets.push(pilet);
-    }),
-  );
+  Object.keys(piletData).forEach((name) => {
+    const pilet = piletData[name];
+    const current = pilet.versions[pilet.current];
+    pilets.push(current);
+  });
 
   return pilets;
 }
 
 export async function getPilet(name: string, version: string): Promise<Pilet | undefined> {
-  const versions = piletData[name] || {};
+  const versions = piletData[name]?.versions || {};
   return versions[version];
 }
 
 export async function setPilet(pilet: Pilet) {
-  const meta = pilet.meta;
-  const current = piletData[meta.name] || {};
-  piletData[meta.name] = {
-    ...current,
-    [meta.version]: pilet,
+  const { name, version } = pilet.meta;
+  const current = piletData[name]?.versions || {};
+  piletData[name] = {
+    current: version,
+    versions: {
+      ...current,
+      [version]: pilet,
+    },
   };
+  updateSnapshot(piletData);
 }
 
 const activeAuthRequests: Array<ActiveAuthRequest> = [];
@@ -45,3 +50,5 @@ export function appendAuthRequest(request: ActiveAuthRequest) {
     req.notifiers.forEach((n) => n(false));
   };
 }
+
+readFromSnapshot(piletData);

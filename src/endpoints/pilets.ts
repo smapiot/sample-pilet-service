@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { join, relative, sep } from 'path';
+import { join, sep } from 'path';
 import { lookup } from 'mime-types';
 import { latestPilets, storePilet } from '../pilets';
 import { getPilet } from '../db';
@@ -12,7 +12,7 @@ export const getFiles = (): RequestHandler => async (req, res, next) => {
   if (!pilet) {
     res.status(404).send('Pilet not found!');
   } else if (file) {
-    const path = join(pilet.root, directoryPath, file).split(sep).join('/');
+    const path = join(directoryPath, file).split(sep).join('/');
     const content = pilet.files[path];
 
     if (content) {
@@ -32,12 +32,8 @@ export const getFiles = (): RequestHandler => async (req, res, next) => {
       }
     }
   } else {
-    const files = Object.keys(pilet.files)
-      .map((m) => relative(pilet.root, m))
-      .filter((m) => m.indexOf(sep) === -1);
-
     res.status(200).json({
-      items: files,
+      items: Object.keys(pilet.files),
     });
   }
 };
