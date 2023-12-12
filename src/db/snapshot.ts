@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { dirname, resolve } from 'path';
 import { existsSync } from 'fs';
 import { mkdir, readFile, readdir, stat, writeFile } from 'fs/promises';
 import { PiletDb } from '../types';
@@ -88,7 +88,7 @@ export function useSnapshot(snapshotDir: string) {
         const pilets = Object.entries(piletData).map(([name, value]) => [name, value.current]);
 
         const content = JSON.stringify(Object.fromEntries(pilets), undefined, 2);
-        await mkdir(path, { recursive: true });
+        await mkdir(dirname(path), { recursive: true });
         await writeFile(path, content, 'utf8');
 
         for (const [name] of pilets) {
