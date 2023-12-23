@@ -106,7 +106,7 @@ export function useSnapshot(snapshotDir: string) {
               const fn = resolve(root, file);
               const dir = dirname(fn);
 
-              files.push([file, buffer]);
+              files.push([fn, buffer]);
 
               if (!dirs.includes(dir)) {
                 dirs.push(dir);
