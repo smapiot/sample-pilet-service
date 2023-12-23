@@ -99,11 +99,26 @@ export function useSnapshot(snapshotDir: string) {
             const root = getSnapshotPiletRootName(snapshotDir, name, version);
             const data = piletData[name].versions[version];
             const content = JSON.stringify(data.meta, undefined, 2);
-            await mkdir(root, { recursive: true });
-            await writeFile(meta, content, 'utf8');
+            const dirs = [root];
+            const files = [[meta, Buffer.from(content, 'utf8')]];
 
             for (const [file, buffer] of Object.entries(data.files)) {
-              await writeFile(resolve(root, file), buffer);
+              const fn = resolve(root, file);
+              const dir = dirname(fn);
+
+              files.push([file, buffer]);
+
+              if (!dirs.includes(dir)) {
+                dirs.push(dir);
+              }
+            }
+
+            for (const dir of dirs) {
+              await mkdir(dir, { recursive: true });
+            }
+
+            for (const [file, buffer] of files) {
+              await writeFile(file, buffer);
             }
           }
         }

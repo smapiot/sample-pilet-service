@@ -1,6 +1,6 @@
 {
   "name": "sample-pilet-service",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Piral: Sample pilet feed service.",
   "main": "dist",
   "typings": "dist",
