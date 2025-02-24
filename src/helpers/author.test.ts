@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { formatAuthor } from './author';
 
 describe('Author Helpers', () => {
