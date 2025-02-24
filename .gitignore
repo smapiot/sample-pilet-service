@@ -63,3 +63,6 @@ typings/
 zeisslets
 .idea
 yarn.lock
+
+# Output when running
+pilets

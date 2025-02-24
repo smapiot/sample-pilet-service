@@ -14,7 +14,7 @@
     "lint": "eslint 'src/**/*.ts'",
     "prettier": "prettier --config prettier.config.js --write 'src/**/*.ts'",
     "build": "tsc --project tsconfig.json",
-    "serve": "node dist/index.js"
+    "serve": "node dist/cli.js"
   },
   "engines": {
     "node": ">=18.0.0"
