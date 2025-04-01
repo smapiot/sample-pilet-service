@@ -5,15 +5,32 @@ import { latestPilets, storePilet } from '../pilets';
 import { getPilet } from '../db';
 import { PiletDb } from '../types';
 
+function getDetails(rest: string) {
+  const parts = rest.split('/');
+
+  if (rest.startsWith('@')) {
+    const id = parts.splice(0, 2).join('/');
+    parts.unshift(id);
+  }
+
+  const id = parts.shift();
+  const version = parts.shift();
+  const file = parts.pop();
+  const directory = parts.join('/');
+
+  return [id, version, directory, file];
+}
+
 export const getFiles = (): RequestHandler => async (req, res, next) => {
-  const { name, version, org, file, 2: directoryPath = '' } = req.params;
-  const id = org ? `@${org}/${name}` : name;
+  // (/@:org)?/:name/:version/((*/)?:file)?
+  const { 0: rest = '' } = req.params;
+  const [id, version, directory, file] = getDetails(rest);
   const pilet = await getPilet(id, version);
 
   if (!pilet) {
     res.status(404).send('Pilet not found!');
   } else if (file) {
-    const path = join(directoryPath, file).split(sep).join('/');
+    const path = join(directory, file).split(sep).join('/');
     const content = pilet.files[path];
 
     if (content) {

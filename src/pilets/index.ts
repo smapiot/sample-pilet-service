@@ -45,6 +45,32 @@ function getPilet(pilet: PiletMetadata) {
         dependencies: pilet.dependencies,
         spec: 'v2',
       };
+    case 'v3':
+      return {
+        name: pilet.name,
+        description: pilet.description,
+        author: pilet.author,
+        license: pilet.license,
+        version: pilet.version,
+        link: pilet.link,
+        requireRef: pilet.requireRef,
+        integrity: pilet.integrity,
+        custom: pilet.custom,
+        dependencies: pilet.dependencies,
+        spec: 'v3',
+      };
+    case 'mf':
+      return {
+        name: pilet.name,
+        description: pilet.description,
+        author: pilet.author,
+        license: pilet.license,
+        version: pilet.version,
+        link: pilet.link,
+        integrity: pilet.integrity,
+        custom: pilet.custom,
+        spec: 'mf',
+      };
     case 'vx':
       return {
         name: pilet.name,

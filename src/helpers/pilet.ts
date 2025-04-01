@@ -6,7 +6,8 @@ import { PiletMetadata, PackageData, PackageFiles, Pilet } from '../types';
 
 const packageRoot = 'package/';
 const checkV1 = /^\/\/\s*@pilet\s+v:1\s*\(([A-Za-z0-9\_\:\-]+)\)/;
-const checkV2 = /^\/\/\s*@pilet\s+v:2\s*\(([A-Za-z0-9\_\:\-]+)\s*,\s*(.*)\)/;
+const checkV2 = /^\/\/\s*@pilet\s+v:2\s*(?:\(([A-Za-z0-9\_\:\-]+),\s*(.*)\))?/;
+const checkV3 = /^\/\/\s*@pilet\s+v:3\s*(?:\(([A-Za-z0-9\_\:\-]+),\s*(.*)\))?/;
 const checkVx = /^\/\/\s*@pilet\s+v:x\s*(?:\((.*)\))?/;
 let iter = 1;
 
@@ -108,6 +109,39 @@ export function extractPiletMetadata(
       author: formatAuthor(data.author),
       custom: data.custom,
       dependencies: getDependencies(plainDependencies, rootUrl, name, version),
+      link: `${rootUrl}/files/${name}/${version}/${file}`,
+      license,
+    };
+  } else if (checkV3.test(main)) {
+    // uses two arguments; requireRef and dependencies as JSON (required)
+    const [, requireRef, plainDependencies] = checkV3.exec(main);
+    return {
+      name,
+      version,
+      type: 'v3',
+      requireRef,
+      description: data.description || '',
+      integrity: computeIntegrity(main),
+      author: formatAuthor(data.author),
+      custom: data.custom,
+      dependencies: getDependencies(plainDependencies, rootUrl, name, version),
+      link: `${rootUrl}/files/${name}/${version}/${file}`,
+      license,
+    };
+  } else if (
+    main.includes(
+      '"Container initialization failed as it has already been initialized with a different share scope"',
+    ) &&
+    /^var [A-Za-z0-9_]+;/.test(main)
+  ) {
+    return {
+      name,
+      version,
+      type: 'mf',
+      description: data.description || '',
+      integrity: computeIntegrity(main),
+      author: formatAuthor(data.author),
+      custom: data.custom,
       link: `${rootUrl}/files/${name}/${version}/${file}`,
       license,
     };
