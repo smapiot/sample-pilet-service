@@ -48,7 +48,7 @@
     "graphql-type-json": "^0.3",
     "mime-types": "^2",
     "response-time": "^2",
-    "tar": "^6"
+    "tar": "^7"
   },
   "devDependencies": {
     "@types/connect-busboy": "^0.0.3",
