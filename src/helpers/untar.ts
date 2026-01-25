@@ -1,10 +1,7 @@
-import * as tar from 'tar';
+import { Parser as TarParser } from 'tar';
 import { createGunzip } from 'zlib';
 import { EventEmitter } from 'events';
 import { PackageFiles } from '../types';
-
-const TarParser = tar.Parse as any;
-
 interface ReadEntry extends EventEmitter {
   path: string;
   mode: number;
