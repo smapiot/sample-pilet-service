@@ -40,7 +40,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@apollo/server": "^4",
+    "@apollo/server": "^5",
     "connect-busboy": "^1",
     "cors": "^2",
     "express": "^4",
