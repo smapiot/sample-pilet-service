@@ -69,7 +69,7 @@
     "prettier": "^3",
     "ts-node": "^10",
     "typescript": "^5",
-    "vitest": "^3"
+    "vitest": "^4"
   },
   "overrides": {
     "express@^4": {
