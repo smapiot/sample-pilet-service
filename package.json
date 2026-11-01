@@ -65,7 +65,7 @@
     "eslint": "^9",
     "eslint-plugin-no-null": "^1",
     "eslint-plugin-react": "^7",
-    "minimatch": "^9",
+    "minimatch": "^11",
     "prettier": "^3",
     "ts-node": "^10",
     "typescript": "^5",
